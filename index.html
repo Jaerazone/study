@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/common1.css">
+    
+</head>
+<body>
+    <div id="app">
+        <h1 id="clock">시계</h1>
+        
+        <div v-if="login" id="greeting">
+            <input type="text" v-model="name">
+            <button @click="loginBtn">Log in</button>
+        </div >
+        <div v-else id="greeting">
+            <h2>반갑습니다. {{name}}님</h2>
+            <form>
+                <input placeholder="메모를 입력해주세요." v-model="text" required>
+                <button @click.prevent="addTodo"> 투두추가 </button>
+                <button @click.prevent="addMemo"> 메모추가 </button>
+                
+            </form>
+            <div id="todo-board" >
+                <todo-component v-for = "td in todolist"
+                v-bind:id="td.id"
+                @delete="deleteTodo"
+                >{{td.text}}</todo-component>
+            </div>
+            <div id="memo-board" class="flex">
+                <memo-component v-for = "m in memolist">{{m.text}}</memo-component>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/background.js"> </script>
+    
+    <script>
+        Vue.component('todo-component',{
+            props: ['id'],
+            template :
+            `<div>
+                <ul>
+                    <li>
+                    <slot></slot>
+                    <button @click="deletetodo">X</button>
+                    </li>
+                </ul>
+            </div>`,
+            methods : {
+                deletetodo : function (){
+                    this.$emit("delete", this.id)
+                }
+            }
+        })
+        Vue.component('memo-component',{
+            template :
+            `<div>
+                <slot></slot>
+            </div>`
+        })
+        new Vue({
+            el : "#app",
+            data : {
+                id: 0,
+                login : true,
+                name : "",
+                text : "",
+                todolist: [],
+                memolist: []
+            },
+            methods : {
+                loginBtn : function() {
+                    this.login = !this.login;
+                },
+                addTodo : function() {
+                    this.todolist.push({id:this.id, text:this.text});
+                    this.text="";
+                    this.id++;
+                },
+                addMemo : function () {
+                    this.memolist.push({text:this.text});
+                    this.text="";
+                },
+                deleteTodo : function(id) {
+                    let index = 0;
+                    this.todolist.forEach( (element, i) => {
+                        if(element.id == id ) {
+                            index = i;
+                        }
+                    });
+                    this.todolist.splice(index,1);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

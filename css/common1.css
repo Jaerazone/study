@@ -1,0 +1,46 @@
+#clock {
+    text-align: center;
+    color: white;
+    text-shadow: 0px 0px 7px black; 
+    /*얼마나 이동할지 px px 얼마나번질지7px 색상*/
+    font-size: 4em;
+}
+#greeting {
+    text-align: center;
+    color : white;
+}
+
+#greeting input{
+    background-color: transparent; /*배경 투명*/
+    border: none;
+    border-bottom: 3px solid white;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    border-bottom: rgba(255,255,255,0.7) 3px solid;
+    margin-top: 10px;
+    margin-right: 40px;
+    text-align: left;
+    color: rgb(48, 47, 47);
+    font-weight: bolder;
+}
+
+.flex {
+    margin : 30px 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flex div {
+    background-color: rgba(255,255,255,0.7); 
+    /*rgba를 이용하면 투명도 설정 가능, 1에가까울수록 진해짐*/
+    width: 200px;
+    margin : 10px;
+    padding : 20px;
+    word-break: break-word;
+    color: rgb(48, 47, 47);
+}
